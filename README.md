@@ -2,9 +2,9 @@
 A simple 2D Car Racing Game developed in C++ as a university project. The game allows players to control a car, avoid obstacles and other vehicles,
 and achieve the highest possible score.
 ## Team Members
-RABIA IZHAR
-AREEJ ZEHRA
-NOOR-UL-HUDA
+-RABIA IZHAR
+-AREEJ ZEHRA
+-NOOR-UL-HUDA
 
 ## How to Run
 1. Clone this repository
