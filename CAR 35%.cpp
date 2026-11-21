@@ -66,7 +66,6 @@ bool asktoPlayAgain(int score, int highScore)
 bool checkCollision(const int track[], int carLane)
 {
     return track[CAR_ROW] == carLane;
-<<<<<<< HEAD
 }//NOOR PART
     {
         while (_kbhit())
@@ -98,7 +97,7 @@ bool checkCollision(const int track[], int carLane)
         }
     }
 
-=======
+
 }// rest of code (rabia)
 void drawGame(const int track[], int carLane, int score,
     int highScore, int scroll, bool crashed)
