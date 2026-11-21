@@ -66,7 +66,8 @@ bool asktoPlayAgain(int score, int highScore)
 bool checkCollision(const int track[], int carLane)
 {
     return track[CAR_ROW] == carLane;
-}void drawGame(const int track[], int carLane, int score,
+}// rest of code (rabia)
+void drawGame(const int track[], int carLane, int score,
     int highScore, int scroll, bool crashed)
 {
     string screen = "   Score: " + to_string(score) + "   High: " + to_string(highScore) + "      \n\n";//covet the score and highscore to string and stores as score: highscore:
