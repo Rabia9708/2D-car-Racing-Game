@@ -66,5 +66,33 @@ bool asktoPlayAgain(int score, int highScore)
 bool checkCollision(const int track[], int carLane)
 {
     return track[CAR_ROW] == carLane;
-}int main() {
-}
+    {//NOOR PART
+        while (_kbhit())
+        {
+            int k = _getch(); //reads the key which is pressed
+
+
+            if (k == 0 || k == 224)
+            {
+                int arrow = _getch(); //reads which arrow is pressed
+
+                if (arrow == 75 && carLane > 0)
+                {
+                    carLane--; //it moves car one lane left
+                }
+                else if (arrow == 77 && carLane < NUM_LANES - 1)
+                {
+                    carLane++; //moves car one lane right
+                }
+            }
+            else if ((k == 'a' || k == 'A') && carLane > 0)
+            {
+                carLane--; //moves car one lane left
+            }
+            else if ((k == 'd' || k == 'D') && carLane < NUM_LANES - 1)
+            {
+                carLane++; //moves car one lane right
+            }
+        }
+    }
+
