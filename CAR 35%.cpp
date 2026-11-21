@@ -68,6 +68,12 @@ bool checkCollision(const int track[], int carLane)
     return track[CAR_ROW] == carLane;
 <<<<<<< HEAD
 }//NOOR PART
+void maximizeConsole()
+{ HWND console = GetConsoleWindow();
+ShowWindow(console, SW_MAXIMIZE); }
+    
+void handleInput(int& carLane)
+
     {
         while (_kbhit())
         {
