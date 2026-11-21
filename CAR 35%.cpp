@@ -66,7 +66,8 @@ bool asktoPlayAgain(int score, int highScore)
 bool checkCollision(const int track[], int carLane)
 {
     return track[CAR_ROW] == carLane;
-    {//NOOR PART
+}//NOOR PART
+    {
         while (_kbhit())
         {
             int k = _getch(); //reads the key which is pressed
