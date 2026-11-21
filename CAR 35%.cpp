@@ -66,6 +66,7 @@ bool asktoPlayAgain(int score, int highScore)
 bool checkCollision(const int track[], int carLane)
 {
     return track[CAR_ROW] == carLane;
+<<<<<<< HEAD
 }//NOOR PART
     {
         while (_kbhit())
@@ -97,3 +98,59 @@ bool checkCollision(const int track[], int carLane)
         }
     }
 
+=======
+}// rest of code (rabia)
+void drawGame(const int track[], int carLane, int score,
+    int highScore, int scroll, bool crashed)
+{
+    string screen = "   Score: " + to_string(score) + "   High: " + to_string(highScore) + "      \n\n";//covet the score and highscore to string and stores as score: highscore:
+
+    for (int r = 0; r < TRACK_ROWS; r++)//this runs till for all the runs 
+    {
+        screen = screen + "   |";// this creates the left boundary of the roaad
+
+        for (int i = 0; i < NUM_LANES; i++)// there are 3 lanes so it controls the lnes of game 
+        {
+            string c = "     ";   // this makes an empty road
+
+            if (track[r] == i)// checks the position of enemy car 
+            {
+                c = " CAR ";// enemy is printed as car
+            }
+            if (r == CAR_ROW && i == carLane)// it chcks whetthjer the player has the same row as the enemy and the same lane as enemy
+            {
+                if (crashed)// if crashed is true them boomis printed 
+                {
+                    c = "**BOOM**";
+                }
+                else
+                {
+                    c = " {you} ";// else the player continous toplay
+                }
+            }
+            screen = screen + c;// whtevr is done to the cell is added to the screen whether the car crashed or didnt
+            if (i < NUM_LANES - 1)
+            {
+                if ((r + scroll) % 2 == 0)// if r+ croll is even : is added to the screen
+                {
+                    screen = screen + ':';
+                }
+                else
+                {
+                    screen = screen + ' ';// if odd spaceis added to the screen
+                }
+            }
+        }
+
+        screen = screen + "|\n";// right border and then move to next row
+    }
+
+    screen = screen + "\n   Move: A / D or arrow keys\n";// this shows the movement keys 
+
+    moveCursortotop();// funtion is called to move the cursor to top again to print anoter screen
+
+    cout << screen;// this prints the screen
+}
+int main() {
+}
+>>>>>>> 8c5950fefc49bf20361e7c810221b1b47a16850f
