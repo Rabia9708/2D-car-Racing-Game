@@ -144,11 +144,11 @@ void drawGame(const int track[], int carLane, int score,
             {
                 if (crashed)// if crashed is true them boomis printed 
                 {
-                    c = "**BOOM**";
+                    c = "BOOOM";
                 }
                 else
                 {
-                    c = " {you} ";// else the player continous toplay
+                    c = "[P]";// else the player continous toplay
                 }
             }
             screen = screen + c;// whtevr is done to the cell is added to the screen whether the car crashed or didnt
@@ -166,7 +166,7 @@ void drawGame(const int track[], int carLane, int score,
         }
 
         screen = screen + "|\n";// right border and then move to next row
-    }
+    }// noor part
 
     screen = screen + "\n   Move: A / D or arrow keys\n";// this shows the movement keys 
 
@@ -187,27 +187,29 @@ void resetRound(int track[], int& carLane, int& score,
     scroll = 0;
     gapCounter = 0;
 }
-int playGame(int highScore){
+int playGame(int highScore) {
     int track[TRACK_ROWS];
     int carLane, score, scroll, gapCounter;
     bool crashed = false;
 
     resetRound(track, carLane, score, scroll, gapCounter);
-    system("cls");
+    system("cls");// clears the console screen
 
-    while (!crashed){
+    while (!crashed) {
         handleInput(carLane);
 
         // the player may have steered straight into an obstacle
         if (checkCollision(track, carLane)) {
             crashed = true;
-        }else {
+        }
+        else {
             moveObstacles(track, gapCounter, scroll);
 
             // or the road may have moved an obstacle onto us
             if (checkCollision(track, carLane)) {
                 crashed = true;
-            }else {
+            }
+            else {
                 score++;   // survived this step
             }
         }
@@ -218,7 +220,28 @@ int playGame(int highScore){
 
     Sleep(900);   // let the player see the BOOM
     return score;
+}// rabia paart
+// ---- Module 6: main (rabia) ----
+int main()
+{
+    maximizeConsole();// function call that runs the game on full screen
+
+    srand(static_cast<unsigned int>(time(0)));// gets a random number .....time(0) gets corrent time ....unsigned keeps it as a wholw number static_castcovrts it to the type srand will eccept
+
+    int highScore = 0;// high score variable is initialized at 0
+    bool again = true;// again variable is initialised at true
+
+    showStartScreen(highScore);// funtion call to show the start screen
+
+    while (again)
+    {
+        int score = playGame(highScore);// current score is stored
+        highScore = updateHighScore(score, highScore);// highscore is updated everytime
+        again = asktoPlayAgain(score, highScore);//will ask to restaart thegame
+    }
+
+    system("cls");// send windowss the clearscreen command to clear the console output screen
+    cout << "THANK YOU FOR PLAYING \n";
+
+    return 0;
 }
-int main() {
-}
->>>>>>> 8c5950fefc49bf20361e7c810221b1b47a16850f
