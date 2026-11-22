@@ -157,6 +157,21 @@ void drawGame(const int track[], int carLane, int score,
 
     cout << screen;// this prints the screen
 }
+void resetRound(int track[], int& carLane, int& score,
+    int& scroll, int& gapCounter)
+{
+    for (int i = 0; i < TRACK_ROWS; i++)
+    {
+        track[i] = -1;   // empty road
+    }
+
+    carLane = NUM_LANES / 2;   // start in the middle lane
+    score = 0;
+    scroll = 0;
+    gapCounter = 0;
+}
+
+
 int main() {
 }
 >>>>>>> 8c5950fefc49bf20361e7c810221b1b47a16850f
