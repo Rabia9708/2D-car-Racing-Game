@@ -22,6 +22,10 @@ const int ROAD_W = NUM_LANES * LANE_W;             // width of the grey road
 const int ROAD_X = (SCREEN_W - ROAD_W) / 2;        // x position where the grey road starts
 const float STEP_TIME = 0.12f;                     // seconds between road steps (game speed)
 
+// ---- AUDIO (new) ----
+Music bgMusic;      // the background music (streamed, because it is long)
+Sound boomSound;    // the crash sound (loaded fully, because it is short)
+
 // areej💖
 // draws one F1 car, cx and cy are the centre of the car in pixels
 void drawF1Car(int cx, int cy, Color body, bool isPlayer)
@@ -118,6 +122,8 @@ void showStartScreen(int highScore)
     // waits here until ENTER is pressed (or the window is closed)
     while (!WindowShouldClose() && !IsKeyPressed(KEY_ENTER))
     {
+        UpdateMusicStream(bgMusic);   // AUDIO: keeps the music playing on this screen
+
         BeginDrawing();
         ClearBackground(Color{ 34, 139, 34, 255 });
 
@@ -136,6 +142,8 @@ bool asktoPlayAgain(int score, int highScore)
 {
     while (!WindowShouldClose())
     {
+        UpdateMusicStream(bgMusic);   // AUDIO: keeps the music playing on this screen
+
         BeginDrawing();
         ClearBackground(Color{ 20, 90, 20, 255 });
 
@@ -199,6 +207,8 @@ void moveObstacles(int track[], int& gapCounter, int& scroll) {
 void drawGame(const int track[], int carLane, int score,
     int highScore, int scroll, bool crashed, float smooth)
 {
+    UpdateMusicStream(bgMusic);   // AUDIO: keeps the music playing during the game and the BOOM wait
+
     BeginDrawing();
     ClearBackground(Color{ 34, 139, 34, 255 });
 
@@ -313,6 +323,12 @@ int playGame(int highScore) {
         drawGame(track, carLane, score, highScore, scroll, crashed, timer / STEP_TIME);
     }
 
+    // AUDIO: the main loop is over, so the car has crashed. Play the boom sound once
+    if (crashed)
+    {
+        PlaySound(boomSound);
+    }
+
     float wait = 0;   // let the player see the BOOM for about one second
     while (wait < 0.9f && !WindowShouldClose()) {
         wait = wait + GetFrameTime();
@@ -326,6 +342,14 @@ int main()
     InitWindow(SCREEN_W, SCREEN_H, "2D CAR RACING GAME");// opens the game window (a real GUI window instead of the console)
     SetExitKey(KEY_NULL);// so the ESC key does not close the window by itself
     SetTargetFPS(60);// the game draws 60 frames every second
+
+    // AUDIO: start the sound system and load both mp3 files (they must be next to the .cpp file)
+    InitAudioDevice();
+    bgMusic = LoadMusicStream("music.mp3");   // the background music
+    boomSound = LoadSound("boom.mp3");        // the crash sound
+    bgMusic.looping = true;                   // the music repeats again and again
+    SetMusicVolume(bgMusic, 0.5f);            // 0.0 = silent, 1.0 = full volume
+    PlayMusicStream(bgMusic);                 // start the music ONE time only, it never stops after this
 
     srand(static_cast<unsigned int>(time(0)));// gets a random number .....time(0) gets corrent time ....unsigned keeps it as a wholw number static_castcovrts it to the type srand will eccept
 
@@ -344,12 +368,18 @@ int main()
     float wait = 0;
     while (wait < 1.5f && !WindowShouldClose())// shows the thank you message for a moment
     {
+        UpdateMusicStream(bgMusic);   // AUDIO: keeps the music playing on this screen
         wait = wait + GetFrameTime();
         BeginDrawing();
         ClearBackground(Color{ 20, 90, 20, 255 });
         DrawText("THANK YOU FOR PLAYING", 190, 320, 36, WHITE);
         EndDrawing();
     }
+
+    // AUDIO: free the sounds and close the sound system
+    UnloadMusicStream(bgMusic);
+    UnloadSound(boomSound);
+    CloseAudioDevice();
 
     CloseWindow();// closes the game window
 
